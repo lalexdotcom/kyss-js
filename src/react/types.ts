@@ -6,4 +6,4 @@ export type Setters<S extends StateBase> = {
   ) => void
 }
 
-export type KyssProxy<S extends StateBase> = S & Setters<S>
+export type KyssProxy<S extends StateBase> = Readonly<S> & Setters<S>
