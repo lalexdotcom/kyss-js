@@ -34,7 +34,7 @@
     "test:watch": "rstest"
   },
   "peerDependencies": {
-    "react": ">=19.0.0"
+    "react": ">=18.0.0"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.7",

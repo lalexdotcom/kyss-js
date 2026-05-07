@@ -20,7 +20,7 @@ function Counter() {
 npm install kyss
 ```
 
-React ≥ 19 is a peer dependency.
+React ≥ 18 is a peer dependency.
 
 ## Usage
 

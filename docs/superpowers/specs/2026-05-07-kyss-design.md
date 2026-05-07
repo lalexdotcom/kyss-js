@@ -8,7 +8,7 @@
 
 ## Overview
 
-KYSS is a lightweight state management library combining Zustand's global store model with Valtio's proxy-based selective re-rendering. It ships as a dual-entry npm package: a vanilla JS/TS core and a React 19 bindings layer.
+KYSS is a lightweight state management library combining Zustand's global store model with Valtio's proxy-based selective re-rendering. It ships as a dual-entry npm package: a vanilla JS/TS core and a React bindings layer.
 
 ---
 
@@ -46,7 +46,7 @@ Project initialized via rslib scaffold.
     }
   },
   "peerDependencies": {
-    "react": ">=19.0.0"
+    "react": ">=18.0.0"
   }
 }
 ```
@@ -269,7 +269,7 @@ function UserPanel() {
 | Setter closure | `store.setState` direct | Prevents stale state in functional updates |
 | `useKyssStore` proxy | None | Re-renders on all changes, no tracking overhead |
 | Base state type | `Record<string, any>` | Compatible with all plain objects |
-| React version | ≥19 | `useSyncExternalStore` is stable, concurrent-safe |
+| React version | ≥18 | `useSyncExternalStore` introduced in React 18, concurrent-safe |
 
 ---
 
