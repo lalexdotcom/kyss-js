@@ -22,16 +22,37 @@ export function useKyss<S extends StateBase>(store: Store<S>): KyssProxy<S> {
 
   const rawState = useSyncExternalStore(subscribe, () => store.getState())
 
+  // Setters are memoized on store only — they call store.setState directly
+  // to avoid stale closure over rawState
+  const setters = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.keys(store.getState()).map(key => [
+          `set${key[0].toUpperCase()}${key.slice(1)}`,
+          (val: unknown) =>
+            store.setState(
+              typeof val === 'function'
+                ? (prev: S) => ({
+                    [key]: (val as (p: unknown) => unknown)(prev[key as keyof S]),
+                  })
+                : { [key]: val }
+            ),
+        ])
+      ),
+    [store]
+  )
+
   return useMemo(
     () =>
       new Proxy(rawState as object, {
         get(target, prop: string | symbol) {
           if (typeof prop === 'string') {
+            if (prop in setters) return setters[prop]
             trackedRef.current.add(prop)
           }
           return Reflect.get(target, prop)
         },
       }) as KyssProxy<S>,
-    [rawState]
+    [rawState, setters]
   )
 }

@@ -49,3 +49,59 @@ describe('useKyss — proxy tracking', () => {
     expect(result.current.b).toBe(0)
   })
 })
+
+describe('useKyss — setters', () => {
+  it('exposes a setter for each key as set<Key>', () => {
+    const store = createStore({ count: 0 })
+    const { result } = renderHook(() => useKyss(store))
+    expect(typeof (result.current as any).setCount).toBe('function')
+  })
+
+  it('setter with a value updates state', () => {
+    const store = createStore({ count: 0 })
+    const { result } = renderHook(() => {
+      const { count, setCount } = useKyss(store)
+      return { count, setCount }
+    })
+    act(() => { result.current.setCount(42) })
+    expect(store.getState().count).toBe(42)
+  })
+
+  it('setter with a function receives the current state value', () => {
+    const store = createStore({ count: 10 })
+    const { result } = renderHook(() => {
+      const { count, setCount } = useKyss(store)
+      return { count, setCount }
+    })
+    act(() => { result.current.setCount(prev => prev + 5) })
+    expect(store.getState().count).toBe(15)
+  })
+
+  it('setter with function always reads latest state (no stale closure)', () => {
+    const store = createStore({ count: 0 })
+    const { result } = renderHook(() => {
+      const { setCount } = useKyss(store)
+      return { setCount }
+    })
+    // Two synchronous updates: first directly on store, then via setter
+    act(() => {
+      store.setState({ count: 5 })
+      result.current.setCount(prev => prev + 1)
+    })
+    expect(store.getState().count).toBe(6)
+  })
+
+  it('setter does not cause re-render in a component that only uses another key', () => {
+    const store = createStore({ count: 0, name: 'Alice' })
+    let renderCount = 0
+    renderHook(() => {
+      renderCount++
+      const { name } = useKyss(store)
+      return name
+    })
+    const countAfterMount = renderCount
+
+    act(() => { store.setState({ count: 1 }) })
+    expect(renderCount).toBe(countAfterMount)
+  })
+})
