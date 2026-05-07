@@ -34,8 +34,8 @@ export function useKyss<S extends StateBase>(store: Store<S>): KyssProxy<S> {
               typeof val === 'function'
                 ? (prev: S) => ({
                     [key]: (val as (p: unknown) => unknown)(prev[key as keyof S]),
-                  })
-                : { [key]: val }
+                  } as Partial<S>)
+                : { [key]: val } as Partial<S>
             ),
         ])
       ),
