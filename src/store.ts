@@ -3,6 +3,13 @@ import type { StateBase, Store } from './index'
 export function createStore<S extends StateBase>(initialState: S): Store<S> {
   let state: S = initialState
 
+  type Listener = {
+    callback: (state: S, prevState: S) => void
+    keys?: (keyof S)[]
+  }
+
+  const listeners = new Set<Listener>()
+
   return {
     getState() {
       return state
@@ -13,29 +20,38 @@ export function createStore<S extends StateBase>(initialState: S): Store<S> {
       const update = typeof partial === 'function' ? partial(state) : partial
       const next: S = replace ? (update as S) : { ...state, ...update }
 
-      // No-op check: stop if no top-level key differs
       const allKeys = [
         ...new Set([
           ...Object.keys(prev as object),
           ...Object.keys(next as object),
         ]),
       ]
-      const hasChanged = allKeys.some(k => (prev as StateBase)[k] !== (next as StateBase)[k])
+      const hasChanged = allKeys.some(
+        k => (prev as StateBase)[k] !== (next as StateBase)[k]
+      )
       if (!hasChanged) return
 
       state = next
+
+      for (const listener of listeners) {
+        if (!listener.keys) {
+          listener.callback(state, prev)
+        } else if (listener.keys.some(k => state[k] !== prev[k])) {
+          listener.callback(state, prev)
+        }
+      }
     },
 
-    addListener(
-      _callback: (state: S, prevState: S) => void,
-      _keys?: (keyof S)[]
-    ) {
-      // implemented in Task 4
-      return () => {}
+    addListener(callback, keys) {
+      const listener: Listener = { callback, keys }
+      listeners.add(listener)
+      return () => {
+        listeners.delete(listener)
+      }
     },
 
     clearListeners() {
-      // implemented in Task 5
+      listeners.clear()
     },
   }
 }
