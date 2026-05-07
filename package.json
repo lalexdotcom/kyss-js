@@ -2,6 +2,7 @@
   "name": "kyss",
   "version": "0.1.0",
   "description": "Keep Your State Simple — proxy-tracked global state for React",
+  "license": "MIT",
   "keywords": [
     "state",
     "react",
