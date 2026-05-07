@@ -1,0 +1,47 @@
+{
+  "name": "kyss",
+  "version": "0.1.0",
+  "description": "Keep Your State Simple — proxy-tracked global state for React",
+  "keywords": [
+    "state",
+    "react",
+    "proxy",
+    "store"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "test": "rstest run",
+    "test:watch": "rstest"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.58.7",
+    "@rslib/core": "^0.21.4",
+    "@rstest/core": "^0.9.10",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.3"
+  }
+}
