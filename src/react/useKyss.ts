@@ -1,5 +1,4 @@
-import { useRef, useCallback, useMemo } from 'react'
-import { useSyncExternalStore } from 'react'
+import { useRef, useCallback, useMemo, useSyncExternalStore } from 'react'
 import type { StateBase, Store } from '../index'
 import type { KyssProxy } from './types'
 
@@ -28,7 +27,7 @@ export function useKyss<S extends StateBase>(store: Store<S>): KyssProxy<S> {
     () =>
       Object.fromEntries(
         Object.keys(store.getState()).map(key => [
-          `set${key[0].toUpperCase()}${key.slice(1)}`,
+          `set${key.charAt(0).toUpperCase()}${key.slice(1)}`,
           (val: unknown) =>
             store.setState(
               typeof val === 'function'
