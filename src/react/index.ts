@@ -1,2 +1,3 @@
-// kyss/react — React hooks entry point
-export {}
+export type { Setters, KyssProxy } from './types'
+export { useKyssStore } from './useKyssStore'
+export { useKyss } from './useKyss'
