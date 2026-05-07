@@ -101,3 +101,42 @@ describe('addListener (no key filter)', () => {
     expect(b).toEqual([1])
   })
 })
+
+describe('addListener (key filter)', () => {
+  it('notifies when a watched key changes', () => {
+    const store = createStore({ count: 0, name: 'Alice' })
+    const calls: number[] = []
+    store.addListener(s => calls.push(s.count), ['count'])
+    store.setState({ count: 1 })
+    expect(calls).toEqual([1])
+  })
+
+  it('does not notify when only unwatched keys change', () => {
+    const store = createStore({ count: 0, name: 'Alice' })
+    const calls: string[] = []
+    store.addListener(s => calls.push(s.name), ['count'])
+    store.setState({ name: 'Bob' })
+    expect(calls).toHaveLength(0)
+  })
+
+  it('notifies when any one of several watched keys changes', () => {
+    const store = createStore({ a: 0, b: 0, c: 0 })
+    const calls: number[] = []
+    store.addListener(s => calls.push(s.b), ['a', 'b'])
+    store.setState({ c: 1 })   // not watched
+    store.setState({ b: 5 })   // watched
+    expect(calls).toEqual([5])
+  })
+})
+
+describe('clearListeners', () => {
+  it('removes all listeners so none are called after clear', () => {
+    const store = createStore({ count: 0 })
+    const calls: number[] = []
+    store.addListener(s => calls.push(s.count))
+    store.addListener(s => calls.push(s.count))
+    store.clearListeners()
+    store.setState({ count: 1 })
+    expect(calls).toHaveLength(0)
+  })
+})
