@@ -1,5 +1,5 @@
 {
-	"name": "kyss",
+	"name": "kyss-js",
 	"version": "1.0.0",
 	"description": "Keep Your State Simple — proxy-tracked global state for React",
 	"license": "MIT",

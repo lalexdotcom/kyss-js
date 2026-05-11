@@ -1,4 +1,4 @@
-# kyss
+# kyss-js
 
 **Keep Your State Simple** — proxy-tracked global state for React.
 
@@ -17,7 +17,7 @@ function Counter() {
 ## Install
 
 ```bash
-npm install kyss
+npm install kyss-js
 ```
 
 React ≥ 18 is a peer dependency.
@@ -27,7 +27,7 @@ React ≥ 18 is a peer dependency.
 ### Create a store
 
 ```ts
-import { createStore } from 'kyss'
+import { createStore } from 'kyss-js'
 
 const store = createStore({ count: 0, user: { name: 'Alice' } })
 ```
@@ -37,7 +37,7 @@ const store = createStore({ count: 0, user: { name: 'Alice' } })
 Re-renders only when the keys accessed during render have changed. The primary usage pattern is destructuring.
 
 ```tsx
-import { useKyss } from 'kyss/react'
+import { useKyss } from 'kyss-js/react'
 
 function Counter() {
   const { count, setCount } = useKyss(store)
@@ -69,7 +69,7 @@ Tracking is **shallow**: accessing `user` subscribes to changes of the `user` ke
 Re-renders on any state change. No proxy, no key tracking.
 
 ```tsx
-import { useKyssStore } from 'kyss/react'
+import { useKyssStore } from 'kyss-js/react'
 
 function App() {
   const [state, setState] = useKyssStore(store)
@@ -82,7 +82,7 @@ function App() {
 Works outside React — useful for services, tests, or framework-agnostic code.
 
 ```ts
-import { createStore } from 'kyss'
+import { createStore } from 'kyss-js'
 
 const store = createStore({ count: 0 })
 
@@ -119,7 +119,7 @@ interface Store<S> {
 Returns a proxy combining the current state with auto-generated setters. The setter for key `foo` is `setFoo`.
 
 ```ts
-type KyssProxy<S> = S & {
+type KyssProxy<S> = Readonly<S> & {
   [K in keyof S as `set${Capitalize<string & K>}`]: (val: S[K] | ((prev: S[K]) => S[K])) => void
 }
 ```
