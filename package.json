@@ -3,12 +3,27 @@
 	"version": "1.0.0",
 	"description": "Keep Your State Simple — proxy-tracked global state for React",
 	"license": "MIT",
+	"author": "lalexdotcom",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lalexdotcom/kyss.git"
+	},
+	"homepage": "https://github.com/lalexdotcom/kyss#readme",
+	"bugs": {
+		"url": "https://github.com/lalexdotcom/kyss/issues"
+	},
 	"keywords": [
 		"state",
+		"state-management",
 		"react",
 		"proxy",
-		"store"
+		"store",
+		"hooks",
+		"typescript",
+		"zustand",
+		"valtio"
 	],
+	"sideEffects": false,
 	"type": "module",
 	"exports": {
 		".": {
