@@ -6,11 +6,11 @@
 	"author": "lalexdotcom",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/lalexdotcom/kyss.git"
+		"url": "git+https://github.com/lalexdotcom/kyss-js.git"
 	},
-	"homepage": "https://github.com/lalexdotcom/kyss#readme",
+	"homepage": "https://github.com/lalexdotcom/kyss-js#readme",
 	"bugs": {
-		"url": "https://github.com/lalexdotcom/kyss/issues"
+		"url": "https://github.com/lalexdotcom/kyss-js/issues"
 	},
 	"keywords": [
 		"state",
