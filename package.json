@@ -1,6 +1,6 @@
 {
 	"name": "kyss-js",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Keep Your State Simple — proxy-tracked global state for React",
 	"license": "MIT",
 	"author": "lalexdotcom",
@@ -61,5 +61,5 @@
 		"react": "^19.2.6",
 		"typescript": "^6.0.3"
 	},
-	"packageManager": "npm@11.5.2"
+	"packageManager": "npm@11.12.1"
 }
