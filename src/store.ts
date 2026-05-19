@@ -15,7 +15,7 @@ export function createStore<S extends StateBase>(initialState: S): Store<S> {
       return state
     },
 
-    setState(partial, replace = false) {
+    setState(partial: Partial<S> | S | ((prev: S) => Partial<S> | S), replace = false) {
       const prev = state
       const update = typeof partial === 'function' ? partial(state) : partial
       const next: S = replace ? (update as S) : { ...state, ...update }

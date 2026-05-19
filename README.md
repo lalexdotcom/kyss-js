@@ -104,7 +104,8 @@ Creates a store from a plain object.
 ```ts
 interface Store<S> {
   getState(): S
-  setState(partial: Partial<S> | ((prev: S) => Partial<S>), replace?: boolean): void
+  setState(update: Partial<S> | ((prev: S) => Partial<S>), replace?: false): void
+  setState(update: S | ((prev: S) => S), replace: true): void
   addListener(callback: (state: S, prevState: S) => void, keys?: (keyof S)[]): () => void
   clearListeners(): void
 }

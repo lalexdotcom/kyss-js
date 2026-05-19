@@ -2,10 +2,8 @@ export type StateBase = Record<string, any>
 
 export interface Store<S extends StateBase> {
   getState(): S
-  setState(
-    partial: Partial<S> | ((prev: S) => Partial<S>),
-    replace?: boolean
-  ): void
+  setState(update: Partial<S> | ((prev: S) => Partial<S>), replace?: false): void
+  setState(update: S | ((prev: S) => S), replace: true): void
   addListener(
     callback: (state: S, prevState: S) => void,
     keys?: (keyof S)[]
